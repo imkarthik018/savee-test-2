@@ -1,14 +1,51 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Navigation active state
+    // Tab switching functionality
     const navItems = document.querySelectorAll('.nav-item');
-    
+    const contentSections = document.querySelectorAll('.content-section');
+
+    // Function to switch tabs
+    function switchTab(tabId) {
+        // Hide all content sections
+        contentSections.forEach(section => {
+            section.classList.remove('active');
+        });
+
+        // Show the selected content section
+        const activeSection = document.getElementById(tabId);
+        if (activeSection) {
+            activeSection.classList.add('active');
+        }
+
+        // Update active nav item
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('data-tab') === tabId) {
+                item.classList.add('active');
+            }
+        });
+
+        // Update URL hash
+        history.pushState(null, null, `#${tabId}`);
+    }
+
+
+    // Add click event listeners to nav items
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
-            navItems.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
+            const tabId = item.getAttribute('data-tab');
+            switchTab(tabId);
         });
     });
+
+    // Check URL hash on page load
+    const initialTab = window.location.hash.substring(1);
+    if (initialTab) {
+        switchTab(initialTab);
+    } else {
+        // Default to home if no hash
+        switchTab('home-content');
+    }
 
     // Play/Pause button functionality
     const playButton = document.querySelector('.fa-play')?.parentElement;

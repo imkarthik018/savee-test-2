@@ -27,7 +27,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 40px);
-    max-width: 1200px;
+    max-width: 1250px;
     z-index: 1000;
     background: rgba(20, 20, 25, 0.8);
     backdrop-filter: blur(16px) saturate(200%);
@@ -558,6 +558,45 @@ nav::before {
 .volume-btn:hover {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
+}
+
+/* Content Sections */
+.content-section {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.content-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Navigation Active State */
+.nav-item.active {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(182, 107, 255, 0.25), rgba(155, 81, 224, 0.2));
+    border: 1px solid rgba(182, 107, 255, 0.25);
+    box-shadow: 0 4px 20px rgba(182, 107, 255, 0.15);
+    transform: translateY(-2px);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8);
 }
 
 /* Custom Scrollbar */
