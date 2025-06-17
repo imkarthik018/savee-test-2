@@ -107,41 +107,49 @@
             </div>
         </div>
     </main>
-    
-    <!-- Now Playing Bar -->
-    <div class="now-playing-bar">
-        <div class="now-playing-content">
-            <div class="now-playing-album">
-                <div class="w-24 h-24 rounded-xl overflow-hidden bg-gradient-to-br from-musi-accent/10 to-musi-glitch-blue/10">
-                    <img src="savee images/passion.jpg" alt="Album" class="w-full h-full object-cover">
+
+    <!-- Floating Now Playing Bar (initially hidden) -->
+    <div id="floating-now-playing" class="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-xl border-t border-gray-700/50 transform translate-y-full transition-all duration-300 z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0">
+                        <img src="savee images/passion.jpg" alt="Album" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-white">Midnight City</h4>
+                        <p class="text-xs text-gray-400">M83 • Hurry Up, We're Dreaming</p>
+                    </div>
                 </div>
-                <div class="album-overlay"></div>
-            </div>
-            <div class="now-playing-info">
-                <div class="track-title">Midnight City</div>
-                <div class="track-artist">M83</div>
-            </div>
-            <div class="now-playing-controls">
-                <button class="control-btn">
-                    <i class="fas fa-step-backward"></i>
-                </button>
-                <button class="control-btn play-btn">
-                    <i class="fas fa-play"></i>
-                </button>
-                <button class="control-btn">
-                    <i class="fas fa-step-forward"></i>
-                </button>
-            </div>
-            <div class="now-playing-time">
-                <span class="current-time">1:23</span>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 35%"></div>
+                <div class="flex items-center space-x-6">
+                    <button class="text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    <button class="w-10 h-10 rounded-full bg-musi-accent text-black flex items-center justify-center hover:scale-110 transform transition-transform">
+                        <i class="fas fa-play text-sm"></i>
+                    </button>
+                    <button class="text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                    <div class="w-64 mx-4">
+                        <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-musi-accent to-musi-glitch-blue w-1/3"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-1">
+                            <span>1:23</span>
+                            <span>3:45</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button class="text-gray-400 hover:text-white">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <button class="text-gray-400 hover:text-white">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
                 </div>
-                <span class="duration">3:45</span>
             </div>
-            <button class="volume-btn">
-                <i class="fas fa-volume-up"></i>
-            </button>
         </div>
     </div>
 

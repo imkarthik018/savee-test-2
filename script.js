@@ -2,9 +2,75 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tab switching functionality
     const navItems = document.querySelectorAll('.nav-item');
     const contentSections = document.querySelectorAll('.content-section');
+    const floatingNowPlaying = document.getElementById('floating-now-playing');
+    let nowPlayingObserver;
+    let currentTab = 'home-content'; // Track current tab
+
+    // Function to set up Intersection Observer for Now Playing card
+    function setupNowPlayingObserver() {
+        const nowPlayingCard = document.querySelector('#home-content .now-playing-card');
+        
+        // If we're not on the home page, show the floating bar
+        if (currentTab !== 'home-content') {
+            showFloatingBar();
+            return;
+        }
+
+        // If there's no Now Playing card on the page, show the floating bar
+        if (!nowPlayingCard) {
+            showFloatingBar();
+            return;
+        }
+
+        // Disconnect previous observer if it exists
+        if (nowPlayingObserver) {
+            nowPlayingObserver.disconnect();
+        }
+
+        // Create new observer
+        nowPlayingObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Card is in view, hide floating bar
+                        hideFloatingBar();
+                    } else {
+                        // Card is out of view, show floating bar
+                        showFloatingBar();
+                    }
+                });
+            },
+            {
+                threshold: 0.1, // Trigger when 10% of the card is visible
+                rootMargin: '-80px 0px 0px 0px' // Adjust this to control when the floating bar appears
+            }
+        );
+
+        // Start observing the Now Playing card
+        nowPlayingObserver.observe(nowPlayingCard);
+    }
+
+
+    // Function to show the floating Now Playing bar
+    function showFloatingBar() {
+        if (floatingNowPlaying) {
+            floatingNowPlaying.classList.add('visible');
+        }
+    }
+
+
+    // Function to hide the floating Now Playing bar
+    function hideFloatingBar() {
+        if (floatingNowPlaying) {
+            floatingNowPlaying.classList.remove('visible');
+        }
+    }
 
     // Function to switch tabs
     function switchTab(tabId) {
+        // Update current tab
+        currentTab = tabId;
+        
         // Hide all content sections
         contentSections.forEach(section => {
             section.classList.remove('active');
@@ -26,6 +92,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update URL hash
         history.pushState(null, null, `#${tabId}`);
+        
+        // Set up the observer for the Now Playing card when on home tab
+        if (tabId === 'home-content') {
+            // Small delay to ensure the content is loaded
+            setTimeout(setupNowPlayingObserver, 100);
+        } else {
+            // On other tabs, always show the floating bar
+            showFloatingBar();
+        }
     }
 
 
@@ -45,6 +120,18 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         // Default to home if no hash
         switchTab('home-content');
+    }
+    
+    // Initial setup for Now Playing observer
+    if (currentTab === 'home-content') {
+        // Wait for the home content to be loaded
+        const checkHomeContent = setInterval(() => {
+            const homeContent = document.getElementById('home-content');
+            if (homeContent && homeContent.children.length > 0) {
+                clearInterval(checkHomeContent);
+                setupNowPlayingObserver();
+            }
+        }, 100);
     }
 
     // Play/Pause button functionality

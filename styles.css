@@ -493,6 +493,117 @@ nav::before {
     max-width: 30%;
 }
 
+/* Floating Now Playing Bar */
+#floating-now-playing {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity, backdrop-filter;
+    z-index: 100;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background: rgba(17, 24, 39, 0.85) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Smooth transition for the floating bar */
+#floating-now-playing {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#floating-now-playing.visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Add a subtle gradient overlay for better text readability */
+#floating-now-playing::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(to right, rgb(0 0 0) 0%, rgb(33, 32, 32) 50%, rgb(0, 0, 0) 100%);
+    z-index: -1;
+}
+
+/* Ensure the main content doesn't hide behind the floating bar */
+main {
+    padding-bottom: 80px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    #floating-now-playing .w-64 {
+        width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    #floating-now-playing .flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    #floating-now-playing .w-64 {
+        width: 100%;
+        margin: 8px 0;
+    }
+    
+    #floating-now-playing .space-x-6 {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* Responsive adjustments for floating bar */
+@media (max-width: 640px) {
+    #floating-now-playing {
+        display: block !important;
+    }
+    
+    #floating-now-playing .container {
+        padding: 8px 16px;
+    }
+    
+    #floating-now-playing .flex {
+        gap: 8px;
+    }
+    
+    #floating-now-playing .w-14 {
+        width: 40px;
+        height: 40px;
+    }
+    
+    #floating-now-playing h4 {
+        font-size: 0.875rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 120px;
+    }
+    
+    #floating-now-playing p {
+        font-size: 0.75rem;
+    }
+    
+    #floating-now-playing .space-x-6 > *:not(:first-child) {
+        margin-left: 0.5rem;
+    }
+    
+    #floating-now-playing .w-64 {
+        display: none;
+    }
+    
+    #floating-now-playing .space-x-3 {
+        display: none;
+    }
+}
+
 .current-time,
 .duration {
     color: rgba(255, 255, 255, 0.6);
